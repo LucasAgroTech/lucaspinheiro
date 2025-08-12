@@ -1,13 +1,54 @@
-import AWS from 'aws-sdk';
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const { Pool } = require('pg');
+const AWS = require('aws-sdk');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Configuração do PostgreSQL
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
 
 // Configuração do AWS SES
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
+  region: process.env.AWS_REGION || 'us-east-1'
 });
 
 const ses = new AWS.SES({ apiVersion: '2010-12-01' });
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// Criar tabela de contatos se não existir
+async function initDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS contacts (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        company VARCHAR(255),
+        message TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        status VARCHAR(50) DEFAULT 'pending',
+        ip_address VARCHAR(45),
+        user_agent TEXT
+      )
+    `);
+    console.log('Database initialized successfully');
+  } catch (error) {
+    console.error('Error initializing database:', error);
+  }
+}
 
 // Template de email HTML
 const createEmailTemplate = (data) => {
@@ -110,16 +151,6 @@ const createEmailTemplate = (data) => {
           font-size: 12px;
           font-weight: 600;
           margin-bottom: 16px;
-        }
-        .cta-button {
-          display: inline-block;
-          background-color: #4f46e5;
-          color: #ffffff;
-          padding: 12px 24px;
-          border-radius: 6px;
-          text-decoration: none;
-          font-weight: 600;
-          margin-top: 20px;
         }
       </style>
     </head>
@@ -311,35 +342,28 @@ const createConfirmationTemplate = (data) => {
   `;
 };
 
-export default async function handler(req, res) {
-  // Configurar CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
+// Rota principal - servir o HTML
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
+// Rota de health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+// Rota para enviar email
+app.post('/api/send-email', async (req, res) => {
   try {
     const { name, email, company, message } = req.body;
-
+    
     // Validação básica
     if (!name || !email || !message) {
       return res.status(400).json({ 
         error: 'Por favor, preencha todos os campos obrigatórios.' 
       });
     }
-
+    
     // Validação de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -347,7 +371,22 @@ export default async function handler(req, res) {
         error: 'Por favor, forneça um email válido.' 
       });
     }
-
+    
+    // Salvar no banco de dados
+    const ip_address = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const user_agent = req.headers['user-agent'];
+    
+    const insertQuery = `
+      INSERT INTO contacts (name, email, company, message, ip_address, user_agent)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id, created_at
+    `;
+    
+    const dbResult = await pool.query(insertQuery, [name, email, company, message, ip_address, user_agent]);
+    const contactId = dbResult.rows[0].id;
+    
+    console.log(`Contact saved with ID: ${contactId}`);
+    
     // Preparar dados do email para o proprietário
     const ownerEmailParams = {
       Source: process.env.SENDER_EMAIL || 'no-reply@lucaspinheiro.work',
@@ -375,6 +414,9 @@ ${company ? `Empresa: ${company}` : ''}
 Mensagem:
 ${message}
 
+ID do contato: ${contactId}
+Data: ${new Date().toLocaleString('pt-BR')}
+
 ---
 Este email foi enviado automaticamente pelo formulário de contato do site.
             `,
@@ -384,7 +426,7 @@ Este email foi enviado automaticamente pelo formulário de contato do site.
       },
       ReplyToAddresses: [email]
     };
-
+    
     // Preparar email de confirmação para o cliente
     const clientEmailParams = {
       Source: process.env.SENDER_EMAIL || 'no-reply@lucaspinheiro.work',
@@ -427,21 +469,26 @@ Este é um email automático de confirmação.
         }
       }
     };
-
-    // Enviar email para o proprietário
-    await ses.sendEmail(ownerEmailParams).promise();
     
-    // Enviar email de confirmação para o cliente
+    // Enviar emails
+    await ses.sendEmail(ownerEmailParams).promise();
+    console.log('Owner email sent successfully');
+    
     await ses.sendEmail(clientEmailParams).promise();
-
+    console.log('Client confirmation email sent successfully');
+    
+    // Atualizar status no banco
+    await pool.query('UPDATE contacts SET status = $1 WHERE id = $2', ['sent', contactId]);
+    
     // Resposta de sucesso
     res.status(200).json({ 
       success: true,
-      message: 'Mensagem enviada com sucesso! Você receberá um email de confirmação.' 
+      message: 'Mensagem enviada com sucesso! Você receberá um email de confirmação.',
+      contactId: contactId
     });
-
+    
   } catch (error) {
-    console.error('Erro ao enviar email:', error);
+    console.error('Erro ao processar contato:', error);
     
     // Tratamento de erros específicos do SES
     if (error.code === 'MessageRejected') {
@@ -455,9 +502,38 @@ Este é um email automático de confirmação.
         error: 'Erro de configuração do servidor. Por favor, tente novamente mais tarde.' 
       });
     }
-
+    
     res.status(500).json({ 
       error: 'Erro ao enviar mensagem. Por favor, tente novamente.' 
     });
   }
+});
+
+// Rota para listar contatos (admin)
+app.get('/api/contacts', async (req, res) => {
+  try {
+    // Verificar token de admin (simplificado)
+    const adminToken = req.headers.authorization;
+    if (adminToken !== `Bearer ${process.env.ADMIN_TOKEN}`) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    const result = await pool.query('SELECT * FROM contacts ORDER BY created_at DESC LIMIT 100');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching contacts:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Inicializar servidor
+async function startServer() {
+  await initDatabase();
+  
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  });
 }
+
+startServer();

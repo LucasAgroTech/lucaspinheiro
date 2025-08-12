@@ -1,149 +1,305 @@
-# Portfolio Lucas Pinheiro - Com Integração Amazon SES
+# Lucas Pinheiro - Portfolio Profissional
 
-## 📧 Sistema de Email Configurado
+Sistema de portfolio profissional com formulário de contato integrado, utilizando AWS SES para envio de emails e PostgreSQL para armazenamento de dados.
 
-Este projeto está configurado com Amazon SES para envio automático de emails após o preenchimento do formulário de contato.
+## 🚀 Tecnologias
 
-### ✅ Funcionalidades Implementadas
+- **Backend**: Node.js + Express
+- **Banco de Dados**: PostgreSQL
+- **Email**: AWS SES (Simple Email Service)
+- **Deploy**: Heroku
+- **Frontend**: HTML5, CSS3, JavaScript Vanilla
 
-1. **API Route Serverless** (`/api/send-email`)
-   - Processa o formulário de contato
-   - Envia email para o proprietário com os dados do formulário
-   - Envia email de confirmação para o cliente
+## 📋 Pré-requisitos
 
-2. **Templates de Email Profissionais**
-   - Email HTML responsivo para o proprietário
-   - Email de confirmação automático para o cliente
-   - Design consistente com a identidade visual do site
+- Node.js 18.x ou superior
+- NPM 9.x ou superior
+- Conta na AWS com SES configurado
+- Conta no Heroku
+- PostgreSQL (local para desenvolvimento)
 
-3. **Validações e Tratamento de Erros**
-   - Validação de campos obrigatórios
-   - Validação de formato de email
-   - Mensagens de erro específicas
-   - Notificações visuais de sucesso/erro
+## 🔧 Instalação Local
 
-4. **Segurança**
-   - Variáveis de ambiente protegidas (.env.local)
-   - CORS configurado
-   - .gitignore configurado para não expor credenciais
+1. Clone o repositório:
+```bash
+git clone https://github.com/LucasAgroTech/lucaspinheiro.git
+cd lucaspinheiro
+```
 
-## 🚀 Como Usar
-
-### 1. Instalar Dependências
-
+2. Instale as dependências:
 ```bash
 npm install
 ```
 
-### 2. Configurar Variáveis de Ambiente
+3. Configure as variáveis de ambiente:
+```bash
+cp .env.example .env
+```
 
-O arquivo `.env.local` já está configurado com:
-- Credenciais AWS (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-- Região AWS (us-east-2)
-- Email remetente: `no-reply@lucaspinheiro.work`
-- Email destinatário: `lucas.negociosagro@gmail.com`
+4. Edite o arquivo `.env` com suas configurações:
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/portfolio
+AWS_ACCESS_KEY_ID=sua_chave_aws
+AWS_SECRET_ACCESS_KEY=sua_chave_secreta_aws
+AWS_REGION=us-east-1
+SENDER_EMAIL=no-reply@seudominio.com
+RECIPIENT_EMAIL=seu-email@example.com
+ADMIN_TOKEN=token_seguro_admin
+```
 
-### 3. Verificar Emails no Amazon SES
-
-⚠️ **IMPORTANTE**: Antes de funcionar em produção, você precisa:
-
-1. **Verificar o domínio ou email remetente** no Amazon SES:
-   - Acesse o console AWS SES
-   - Vá em "Verified identities"
-   - Adicione e verifique `lucaspinheiro.work` (domínio) ou `no-reply@lucaspinheiro.work` (email)
-
-2. **Sair do Sandbox Mode** (para enviar para qualquer email):
-   - No console SES, solicite aumento de limite de envio
-   - Ou verifique também os emails destinatários durante testes
-
-### 4. Executar o Projeto
-
-**Desenvolvimento local:**
+5. Execute o servidor:
 ```bash
 npm run dev
 ```
 
-**Deploy para produção (Vercel):**
+O servidor estará disponível em `http://localhost:3000`
+
+## 🚀 Deploy no Heroku
+
+### 1. Preparação Inicial
+
+Certifique-se de ter o Heroku CLI instalado:
 ```bash
-npm run deploy
+# macOS
+brew tap heroku/brew && brew install heroku
+
+# Windows
+# Baixe o instalador em https://devcenter.heroku.com/articles/heroku-cli
+
+# Linux
+curl https://cli-assets.heroku.com/install.sh | sh
 ```
 
-## 📝 Estrutura do Projeto
+### 2. Login no Heroku
+
+```bash
+heroku login
+```
+
+### 3. Criar a Aplicação no Heroku
+
+```bash
+heroku create lucaspinheiro-portfolio
+```
+
+### 4. Adicionar PostgreSQL
+
+```bash
+heroku addons:create heroku-postgresql:mini
+```
+
+### 5. Configurar Variáveis de Ambiente
+
+```bash
+# AWS SES
+heroku config:set AWS_ACCESS_KEY_ID=sua_chave_aws
+heroku config:set AWS_SECRET_ACCESS_KEY=sua_chave_secreta_aws
+heroku config:set AWS_REGION=us-east-1
+
+# Emails
+heroku config:set SENDER_EMAIL=no-reply@seudominio.com
+heroku config:set RECIPIENT_EMAIL=seu-email@example.com
+
+# Admin
+heroku config:set ADMIN_TOKEN=token_seguro_admin
+
+# Ambiente
+heroku config:set NODE_ENV=production
+```
+
+### 6. Deploy
+
+```bash
+git add .
+git commit -m "Deploy para Heroku"
+git push heroku master
+```
+
+### 7. Verificar o Deploy
+
+```bash
+heroku open
+```
+
+### 8. Monitorar Logs
+
+```bash
+heroku logs --tail
+```
+
+## 📧 Configuração do AWS SES
+
+### 1. Verificar Domínio/Email
+
+1. Acesse o console AWS SES
+2. Vá para "Verified identities"
+3. Adicione e verifique seu domínio ou email
+4. Siga as instruções de verificação (DNS ou confirmação por email)
+
+### 2. Sair do Sandbox (Produção)
+
+Por padrão, o SES está em modo sandbox. Para produção:
+
+1. No console AWS SES, vá para "Account dashboard"
+2. Clique em "Request production access"
+3. Preencha o formulário explicando o uso
+4. Aguarde aprovação (geralmente 24-48h)
+
+### 3. Configurar IAM
+
+Crie um usuário IAM com as seguintes permissões:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ses:SendEmail",
+                "ses:SendRawEmail"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+## 🗄️ Estrutura do Banco de Dados
+
+A tabela `contacts` é criada automaticamente com a seguinte estrutura:
+
+```sql
+CREATE TABLE contacts (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    company VARCHAR(255),
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'pending',
+    ip_address VARCHAR(45),
+    user_agent TEXT
+);
+```
+
+## 📁 Estrutura do Projeto
 
 ```
 lucaspinheiro/
-├── api/
-│   └── send-email.js       # API Route para processar emails
 ├── public/
-│   └── og-image.jpg        # Imagem para redes sociais
-├── .env.local              # Variáveis de ambiente (não versionado)
-├── .gitignore              # Arquivos ignorados pelo Git
-├── index.html              # Página principal do portfolio
-├── package.json            # Dependências do projeto
-├── vercel.json             # Configurações da Vercel
-└── README.md               # Este arquivo
+│   ├── index.html      # Página principal do portfolio
+│   └── og-image.jpg    # Imagem para compartilhamento social
+├── server.js           # Servidor Express principal
+├── package.json        # Dependências e scripts
+├── Procfile           # Configuração do Heroku
+├── .env.example       # Exemplo de variáveis de ambiente
+├── .gitignore         # Arquivos ignorados pelo Git
+└── README.md          # Este arquivo
 ```
 
-## 🔧 Configurações AWS SES
+## 🔍 Endpoints da API
 
-### Região Configurada
-- **us-east-2** (Ohio)
+### POST /api/send-email
+Envia email através do formulário de contato
 
-### Emails Configurados
-- **Remetente**: no-reply@lucaspinheiro.work
-- **Destinatário**: lucas.negociosagro@gmail.com
-
-### Limites do SES
-- **Sandbox**: 200 emails/dia (precisa verificar destinatários)
-- **Produção**: Solicitar aumento de limite no console AWS
-
-## 🎨 Personalizações
-
-### Alterar Email Remetente
-Edite no `.env.local`:
-```
-SENDER_EMAIL=seu-email@dominio.com
+**Body:**
+```json
+{
+    "name": "Nome do Cliente",
+    "email": "cliente@example.com",
+    "company": "Empresa (opcional)",
+    "message": "Mensagem do formulário"
+}
 ```
 
-### Alterar Email Destinatário
-Edite no `.env.local`:
+**Resposta de Sucesso:**
+```json
+{
+    "success": true,
+    "message": "Mensagem enviada com sucesso!",
+    "contactId": 123
+}
 ```
-RECIPIENT_EMAIL=seu-email@gmail.com
+
+### GET /api/contacts
+Lista contatos (requer autenticação)
+
+**Headers:**
+```
+Authorization: Bearer SEU_ADMIN_TOKEN
 ```
 
-### Modificar Templates de Email
-Edite os templates em `api/send-email.js`:
-- `createEmailTemplate()` - Email para o proprietário
-- `createConfirmationTemplate()` - Email de confirmação para o cliente
+### GET /health
+Verifica status do servidor
 
-## 📊 Monitoramento
+**Resposta:**
+```json
+{
+    "status": "OK",
+    "timestamp": "2024-12-08T18:00:00.000Z"
+}
+```
 
-### Logs de Erro
-Os erros são logados no console e retornados como resposta da API:
-- Erros de validação (400)
-- Erros de configuração SES (500)
-- Erros de rede
+## 🛠️ Comandos Úteis
 
-### Métricas no AWS SES
-Acesse o console AWS SES para ver:
-- Taxa de entrega
-- Bounces
-- Complaints
-- Emails enviados
+```bash
+# Desenvolvimento local
+npm run dev
 
-## 🛡️ Segurança
+# Produção
+npm start
 
-1. **Nunca commite o arquivo `.env.local`**
-2. **Use sempre variáveis de ambiente para credenciais**
-3. **Mantenha as credenciais AWS com permissões mínimas**
-4. **Rotacione as chaves de acesso regularmente**
+# Verificar logs no Heroku
+heroku logs --tail
 
-## 📞 Suporte
+# Acessar console do PostgreSQL no Heroku
+heroku pg:psql
 
-Para dúvidas ou problemas:
-- Email: lucas.negociosagro@gmail.com
-- Site: https://lucaspinheiro.work
+# Backup do banco de dados
+heroku pg:backups:capture
+heroku pg:backups:download
 
----
+# Resetar banco de dados (CUIDADO!)
+heroku pg:reset DATABASE_URL
 
-**Desenvolvido com ❤️ por Lucas Pinheiro**
+# Ver configurações
+heroku config
+
+# Escalar dynos
+heroku ps:scale web=1
+```
+
+## 🐛 Troubleshooting
+
+### Erro de conexão com PostgreSQL
+- Verifique se a variável `DATABASE_URL` está configurada corretamente
+- No Heroku, ela é configurada automaticamente ao adicionar o addon
+
+### Emails não são enviados
+- Verifique se o domínio/email está verificado no AWS SES
+- Confirme se saiu do modo sandbox do SES
+- Verifique as credenciais AWS
+
+### Erro 503 no Heroku
+- Verifique os logs: `heroku logs --tail`
+- Confirme se o Procfile está correto
+- Verifique se todas as variáveis de ambiente estão configuradas
+
+## 📝 Licença
+
+MIT
+
+## 👤 Autor
+
+**Lucas Pinheiro**
+- GitHub: [@LucasAgroTech](https://github.com/LucasAgroTech)
+- LinkedIn: [Lucas Pinheiro](https://linkedin.com/in/lucaspinheiro)
+
+## 🤝 Contribuições
+
+Contribuições, issues e feature requests são bem-vindas!
+
+## ⭐ Mostre seu apoio
+
+Dê uma ⭐️ se este projeto te ajudou!

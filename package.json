@@ -1,24 +1,39 @@
 {
   "name": "lucaspinheiro-portfolio",
-  "version": "1.0.0",
-  "description": "Portfolio profissional com sistema de contato integrado ao Amazon SES",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Portfolio profissional com sistema de contato integrado ao Amazon SES e PostgreSQL",
+  "main": "server.js",
   "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.x",
+    "npm": ">=9.x"
   },
   "dependencies": {
-    "aws-sdk": "^2.1513.0"
+    "aws-sdk": "^2.1513.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
-    "vercel": "^32.5.0"
+    "nodemon": "^3.1.10"
   },
   "keywords": [
     "portfolio",
     "aws-ses",
     "contact-form",
-    "vercel"
+    "postgresql",
+    "heroku",
+    "express"
   ],
   "author": "Lucas Pinheiro",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LucasAgroTech/lucaspinheiro.git"
+  }
 }
