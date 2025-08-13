@@ -8,6 +8,7 @@ class EmailService {
     this.isConfigured = false;
     this.emailsSent = 0;
     this.lastEmailTime = null;
+    this.rateLimitMap = new Map(); // Para rate limiting por IP
     this.initializeTransporter();
   }
 
@@ -58,17 +59,105 @@ class EmailService {
     }
   }
 
+  // Método para verificar rate limiting por IP
+  checkRateLimit(ipAddress) {
+    const now = Date.now();
+    const windowMs = 15 * 60 * 1000; // 15 minutos
+    const maxEmails = 5; // Máximo 5 emails por IP a cada 15 minutos
+
+    if (!this.rateLimitMap.has(ipAddress)) {
+      this.rateLimitMap.set(ipAddress, { count: 0, windowStart: now });
+      return true;
+    }
+
+    const data = this.rateLimitMap.get(ipAddress);
+    
+    // Reset window se necessário
+    if (now - data.windowStart > windowMs) {
+      data.count = 0;
+      data.windowStart = now;
+    }
+
+    // Verificar se excedeu o limite
+    if (data.count >= maxEmails) {
+      return false;
+    }
+
+    data.count++;
+    return true;
+  }
+
+  // Validação anti-spam de conteúdo
+  validateEmailContent(content) {
+    const spamKeywords = [
+      'viagra', 'cialis', 'buy now', 'click here', 'free money', 
+      'make money fast', 'work from home', 'guaranteed', 'act now',
+      'limited time', 'urgent', 'congratulations you won'
+    ];
+
+    const suspiciousPatterns = [
+      /\$\d+/g, // Valores em dólar
+      /http[s]?:\/\/[^\s]+/g, // URLs (mais de 3 pode ser suspeito)
+      /[A-Z]{5,}/g, // Texto em maiúsculo (mais de 5 chars consecutivos)
+      /!{3,}/g, // Múltiplas exclamações
+    ];
+
+    const contentLower = content.toLowerCase();
+    let suspicionScore = 0;
+
+    // Verificar palavras-chave de spam
+    spamKeywords.forEach(keyword => {
+      if (contentLower.includes(keyword)) {
+        suspicionScore += 10;
+      }
+    });
+
+    // Verificar padrões suspeitos
+    suspiciousPatterns.forEach(pattern => {
+      const matches = content.match(pattern);
+      if (matches) {
+        suspicionScore += matches.length * 2;
+      }
+    });
+
+    // URLs demais são suspeitas
+    const urlMatches = content.match(/http[s]?:\/\/[^\s]+/g);
+    if (urlMatches && urlMatches.length > 3) {
+      suspicionScore += urlMatches.length * 5;
+    }
+
+    return {
+      isValid: suspicionScore < 20,
+      score: suspicionScore,
+      reason: suspicionScore >= 20 ? 'Conteúdo suspeito detectado' : null
+    };
+  }
+
   async sendEmail(options) {
     if (!this.isConfigured || !this.transporter) {
       throw new Error('Serviço de email não está configurado corretamente');
     }
 
     try {
-      // Rate limiting simples
+      // Validar conteúdo contra spam (se não for email de confirmação)
+      if (options.html && !options.skipSpamCheck) {
+        const validation = this.validateEmailContent(options.html + ' ' + (options.text || ''));
+        if (!validation.isValid) {
+          console.warn('⚠️ Email suspeito bloqueado:', validation.reason, 'Score:', validation.score);
+          throw new Error('Conteúdo não permitido detectado');
+        }
+      }
+
+      // Rate limiting por IP (se fornecido)
+      if (options.sourceIp && !this.checkRateLimit(options.sourceIp)) {
+        throw new Error('Rate limit excedido. Tente novamente em alguns minutos.');
+      }
+
+      // Rate limiting global simples
       if (this.lastEmailTime) {
         const timeSinceLastEmail = Date.now() - this.lastEmailTime;
-        if (timeSinceLastEmail < 100) { // Mínimo 100ms entre emails
-          await new Promise(resolve => setTimeout(resolve, 100 - timeSinceLastEmail));
+        if (timeSinceLastEmail < 1000) { // Mínimo 1 segundo entre emails
+          await new Promise(resolve => setTimeout(resolve, 1000 - timeSinceLastEmail));
         }
       }
 
@@ -83,7 +172,11 @@ class EmailService {
         headers: {
           ...emailDefaults.headers,
           'X-Entity-Ref-ID': options.referenceId || undefined,
-          'X-Email-Count': String(this.emailsSent + 1)
+          'X-Email-Count': String(this.emailsSent + 1),
+          'Message-ID': `<${Date.now()}.${Math.random().toString(36).substring(7)}@lucaspinheiro.work>`,
+          'Date': new Date().toUTCString(),
+          'List-Unsubscribe': options.unsubscribeUrl ? `<${options.unsubscribeUrl}>` : '<mailto:unsubscribe@lucaspinheiro.work>',
+          'List-Id': 'Lucas Pinheiro Contact Form <contact.lucaspinheiro.work>'
         }
       };
 

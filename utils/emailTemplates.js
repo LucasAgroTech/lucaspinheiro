@@ -282,13 +282,31 @@ const createClientConfirmationTemplate = (data) => {
           
           <div style="text-align: center; margin: 40px 0;">
             <p style="color: #64748b; margin-bottom: 16px;">Enquanto isso, conheça mais sobre meu trabalho:</p>
-            <a href="https://lucaspinheiro.work" class="cta-button">Visitar Portfolio</a>
+            <a href="https://lucaspinheiro.work" class="cta-button">Visitar Portfólio</a>
           </div>
           
           <div style="background-color: #f1f5f9; padding: 20px; border-radius: 8px; border-left: 4px solid #4f46e5;">
+            <h4 style="margin: 0 0 12px 0; color: #0a0e27;">Informações de Contato</h4>
+            <p style="margin: 0 0 8px 0; color: #334155;">
+              <strong>Email:</strong> lucas.negociosagro@gmail.com
+            </p>
+            <p style="margin: 0 0 8px 0; color: #334155;">
+              <strong>Telefone:</strong> Disponível mediante agendamento
+            </p>
             <p style="margin: 0; color: #334155;">
               <strong>Dica:</strong> Para projetos urgentes, você pode me contatar diretamente via WhatsApp para uma resposta mais rápida.
             </p>
+          </div>
+          
+          <div style="background-color: #e0f2fe; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h4 style="margin: 0 0 12px 0; color: #0277bd;">Meus Serviços</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #334155;">
+              <li style="margin-bottom: 8px;">Desenvolvimento de Aplicações Web</li>
+              <li style="margin-bottom: 8px;">Sistemas de Gestão Empresarial</li>
+              <li style="margin-bottom: 8px;">Automação de Processos</li>
+              <li style="margin-bottom: 8px;">Consultoria em Tecnologia</li>
+              <li>Soluções para Agronegócio</li>
+            </ul>
           </div>
         </div>
         
@@ -300,8 +318,19 @@ const createClientConfirmationTemplate = (data) => {
             <a href="https://linkedin.com/in/lucaspinheiro">LinkedIn</a>
             <a href="https://github.com/lucaspinheiro">GitHub</a>
           </div>
+          
+          <div style="margin: 24px 0; padding: 16px; background-color: #f1f5f9; border-radius: 6px;">
+            <p style="color: #64748b; font-size: 12px; margin: 0 0 8px 0; text-align: center;">
+              Este email foi enviado porque você entrou em contato através do meu site.
+            </p>
+            <p style="color: #64748b; font-size: 12px; margin: 0; text-align: center;">
+              Caso não deseje receber mais emails, <a href="mailto:unsubscribe@lucaspinheiro.work?subject=Unsubscribe" style="color: #4f46e5;">clique aqui para se descadastrar</a>
+            </p>
+          </div>
+          
           <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">
-            © ${new Date().getFullYear()} Lucas Pinheiro - Especialista em Soluções Digitais
+            © ${new Date().getFullYear()} Lucas Pinheiro - Especialista em Soluções Digitais<br>
+            CNPJ: Não informado | Endereço: São Paulo, SP
           </p>
         </div>
       </div>
@@ -347,6 +376,18 @@ O que acontece agora?
 • Se necessário, agendaremos uma reunião para discutir detalhes
 • Você receberá uma proposta personalizada para seu projeto
 
+MEUS SERVIÇOS:
+• Desenvolvimento de Aplicações Web
+• Sistemas de Gestão Empresarial
+• Automação de Processos
+• Consultoria em Tecnologia
+• Soluções para Agronegócio
+
+CONTATO:
+• Email: lucas.negociosagro@gmail.com
+• Telefone: Disponível mediante agendamento
+• Website: https://lucaspinheiro.work
+
 Para projetos urgentes, você pode me contatar diretamente via WhatsApp para uma resposta mais rápida.
 
 Atenciosamente,
@@ -354,7 +395,10 @@ Lucas Pinheiro
 Especialista em Soluções Digitais
 
 ---
-Este é um email automático de confirmação.
+Este email foi enviado porque você entrou em contato através do meu site.
+Para não receber mais emails, responda com "UNSUBSCRIBE" no assunto.
+
+© ${new Date().getFullYear()} Lucas Pinheiro - Todos os direitos reservados
   `.trim();
 };
 

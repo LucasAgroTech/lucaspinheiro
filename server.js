@@ -119,11 +119,29 @@ app.post('/api/send-email', async (req, res) => {
         html: createOwnerEmailTemplate(emailData),
         text: createOwnerTextTemplate(emailData),
         replyTo: email,
-        referenceId: `contact-${contactId}`
+        referenceId: `contact-${contactId}`,
+        sourceIp: ip_address,
+        skipSpamCheck: false // Validar conteúdo de contato
       });
       console.log('✅ Email enviado para o proprietário');
     } catch (emailError) {
       console.error('❌ Erro ao enviar email para proprietário:', emailError);
+      
+      // Se for erro de rate limit, retornar erro específico
+      if (emailError.message.includes('Rate limit')) {
+        return res.status(429).json({ 
+          error: 'Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.',
+          retryAfter: 900 // 15 minutos
+        });
+      }
+      
+      // Se for spam, retornar erro específico
+      if (emailError.message.includes('Conteúdo não permitido')) {
+        return res.status(400).json({ 
+          error: 'Mensagem não permitida. Verifique o conteúdo e tente novamente.'
+        });
+      }
+      
       // Continuar mesmo se falhar o envio para o proprietário
     }
     
@@ -134,7 +152,9 @@ app.post('/api/send-email', async (req, res) => {
         subject: 'Recebi sua mensagem - Lucas Pinheiro',
         html: createClientConfirmationTemplate(emailData),
         text: createClientTextTemplate(emailData),
-        referenceId: `confirmation-${contactId}`
+        referenceId: `confirmation-${contactId}`,
+        skipSpamCheck: true, // Emails de confirmação são seguros
+        unsubscribeUrl: `https://${req.get('host') || 'lucaspinheiro.work'}/unsubscribe?email=${encodeURIComponent(email)}&token=${Buffer.from(email + contactId).toString('base64')}`
       });
       console.log('✅ Email de confirmação enviado para o cliente');
     } catch (emailError) {
@@ -191,6 +211,75 @@ app.get('/api/test-email', async (req, res) => {
       error: error.message 
     });
   }
+});
+
+// Rota para unsubscribe
+app.get('/unsubscribe', (req, res) => {
+  const { email, token } = req.query;
+  
+  if (!email || !token) {
+    return res.status(400).send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Erro - Descadastro</title>
+        <meta charset="UTF-8">
+        <style>
+          body { font-family: Arial, sans-serif; padding: 40px; text-align: center; }
+          .container { max-width: 500px; margin: 0 auto; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>❌ Erro no Descadastro</h1>
+          <p>Link inválido ou expirado.</p>
+          <p>Entre em contato conosco se precisar de ajuda: lucas.negociosagro@gmail.com</p>
+        </div>
+      </body>
+      </html>
+    `);
+  }
+  
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Descadastro Realizado</title>
+      <meta charset="UTF-8">
+      <style>
+        body { 
+          font-family: Arial, sans-serif; 
+          padding: 40px; 
+          text-align: center; 
+          background-color: #f8fafc;
+        }
+        .container { 
+          max-width: 500px; 
+          margin: 0 auto; 
+          background: white; 
+          padding: 40px; 
+          border-radius: 8px; 
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { color: #10b981; font-size: 48px; margin-bottom: 20px; }
+        h1 { color: #0a0e27; margin-bottom: 16px; }
+        p { color: #334155; line-height: 1.6; margin-bottom: 16px; }
+        .email { background-color: #f1f5f9; padding: 8px 12px; border-radius: 4px; font-family: monospace; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="success">✓</div>
+        <h1>Descadastro Realizado com Sucesso</h1>
+        <p>O email <span class="email">${email}</span> foi removido da nossa lista de contatos.</p>
+        <p>Você não receberá mais emails de confirmação automáticos do nosso formulário de contato.</p>
+        <p style="margin-top: 32px; font-size: 14px; color: #64748b;">
+          Se você mudou de ideia, pode entrar em contato novamente através do nosso formulário no site.
+        </p>
+      </div>
+    </body>
+    </html>
+  `);
 });
 
 // Rota para listar contatos (admin)
