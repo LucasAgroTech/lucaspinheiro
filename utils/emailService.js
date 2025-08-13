@@ -20,7 +20,7 @@ class EmailService {
       }
 
       // Configurar o transporter do Nodemailer com as configurações centralizadas
-      this.transporter = nodemailer.createTransporter(smtpConfig);
+      this.transporter = nodemailer.createTransport(smtpConfig);
 
       // Verificar a conexão
       this.verifyConnection();
