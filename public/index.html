@@ -570,7 +570,7 @@
     .metric-value {
       font-size: var(--text-2xl);
       font-weight: 800;
-      color: var(--primary);
+      color: var(--navy-800);
       display: block;
       margin-bottom: var(--space-2);
     }
@@ -596,7 +596,7 @@
       justify-content: center;
       width: 48px;
       height: 48px;
-      background: var(--primary-light);
+      background: var(--navy-800);
       border-radius: var(--radius-lg);
       margin: 0 auto var(--space-3) auto;
       transition: all var(--duration) var(--ease);
@@ -604,12 +604,12 @@
     
     .metric-icon .material-icons {
       font-size: 24px;
-      color: var(--primary);
+      color: white;
       transition: all var(--duration) var(--ease);
     }
     
     .metric:hover .metric-icon {
-      background: var(--primary);
+      background: var(--navy-900);
       transform: translateY(-2px);
     }
     
@@ -664,7 +664,13 @@
     
     @media (min-width: 768px) {
       .services-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(4, 1fr);
       }
     }
     
@@ -861,7 +867,7 @@
       background: var(--navy-900);
       color: white;
       text-align: center;
-      padding: var(--space-24) 0;
+      padding: var(--space-16) 0;
       position: relative;
     }
     
@@ -917,11 +923,11 @@
     /* RESPONSIVE IMPROVEMENTS */
     @media (max-width: 767px) {
       .hero {
-        padding: var(--space-20) 0 var(--space-16) 0;
+        padding: var(--space-20) 0 var(--space-12) 0;
       }
       
       .hero-badge {
-        margin-top: var(--space-8);
+        margin-top: var(--space-12);
         margin-bottom: var(--space-10);
       }
       
@@ -934,11 +940,36 @@
       }
       
       .integration-section {
-        padding: var(--space-12) 0 var(--space-20) 0;
+        padding: var(--space-8) 0 var(--space-12) 0;
+      }
+      
+      .services {
+        padding: var(--space-12) 0;
+      }
+      
+      .comparison {
+        padding: var(--space-12) 0;
+      }
+      
+      .cta-section {
+        padding: var(--space-8) 0;
+      }
+      
+      .contact {
+        padding: var(--space-6) 0;
       }
     }
     
     @media (max-width: 480px) {
+      .hero {
+        padding: var(--space-16) 0 var(--space-8) 0;
+      }
+      
+      .hero-badge {
+        margin-top: var(--space-10);
+        margin-bottom: var(--space-8);
+      }
+      
       .hero-subtitle {
         margin-bottom: var(--space-4);
       }
@@ -952,11 +983,49 @@
         height: 60px;
         font-size: var(--text-xl);
       }
+      
+      .services {
+        padding: var(--space-8) 0;
+      }
+      
+      .comparison {
+        padding: var(--space-8) 0;
+      }
+      
+      .cta-section {
+        padding: var(--space-6) 0;
+      }
+      
+      .contact {
+        padding: var(--space-2) 0 var(--space-6) 0;
+      }
+      
+      .contact .section-header {
+        margin-bottom: var(--space-4);
+      }
+      
+      .contact-info-simple {
+        margin-bottom: var(--space-3);
+      }
+      
+      .contact-form-modern {
+        padding: var(--space-8);
+        border-radius: 20px;
+      }
+      
+      .contact-essential {
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+      
+      .contact-email {
+        font-size: var(--text-base);
+      }
     }
     
     /* CONTACT SECTION */
     .contact {
-      padding: var(--space-24) 0;
+      padding: var(--space-12) 0;
       background: var(--surface-primary);
     }
     
@@ -966,124 +1035,287 @@
       padding: 0 var(--space-6);
     }
     
-    .contact-grid {
-      display: grid;
-      gap: var(--space-12);
-      max-width: 1000px;
+    .contact-container {
+      max-width: 800px;
       margin: 0 auto;
-    }
-    
-    @media (min-width: 768px) {
-      .contact-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-16);
-        align-items: start;
-      }
-    }
-    
-    .contact-info h3 {
-      margin-bottom: var(--space-4);
-      color: var(--navy-900);
-      font-size: var(--text-2xl);
-    }
-    
-    .contact-info p {
-      margin-bottom: var(--space-8);
-      font-size: var(--text-base);
-      line-height: 1.7;
-      color: var(--gray-600);
-    }
-    
-    .contact-methods {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .contact-method {
       display: flex;
-      align-items: flex-start;
-      gap: var(--space-4);
-      padding: var(--space-5) 0;
-      border-bottom: 1px solid var(--gray-200);
+      flex-direction: column;
+      gap: var(--space-8);
     }
     
-    .contact-method:last-child {
-      border-bottom: none;
-    }
-    
-    .contact-method-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--primary-light);
-      color: var(--primary);
-      border-radius: var(--radius-lg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    
-    .contact-method div {
-      flex: 1;
-    }
-    
-    .contact-method strong {
-      display: block;
-      color: var(--navy-900);
-      font-weight: 600;
-      margin-bottom: var(--space-1);
-      font-size: var(--text-base);
-    }
-    
-    .contact-method span {
-      font-size: var(--text-sm);
-      color: var(--gray-600);
-      line-height: 1.4;
-    }
-    
-    /* FORM STYLES */
-    .contact-form {
-      background: var(--surface-primary);
-      padding: var(--space-8);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--gray-200);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .form-group {
+    .contact-info-simple {
+      text-align: center;
       margin-bottom: var(--space-6);
     }
     
-    .form-label {
-      display: block;
+    .contact-essential {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+    
+    .contact-email {
+      font-size: var(--text-lg);
       font-weight: 600;
-      color: var(--navy-900);
-      margin-bottom: var(--space-2);
+      color: var(--primary);
+      padding: var(--space-3) var(--space-6);
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--blue-100) 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--primary);
+      transition: all var(--duration) var(--ease);
+    }
+    
+    .contact-email:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .contact-response {
       font-size: var(--text-sm);
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+    
+
+    
+
+    
+    /* DARK TECH FORM STYLES */
+    .contact-form-modern {
+      background: linear-gradient(135deg, 
+        rgba(15, 23, 42, 0.95) 0%, 
+        rgba(30, 41, 59, 0.98) 50%, 
+        rgba(15, 23, 42, 0.95) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: var(--space-12);
+      border-radius: 24px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(59, 130, 246, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .contact-form-modern::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        /* Circuitos verticais */
+        linear-gradient(90deg, transparent 49%, rgba(59, 130, 246, 0.1) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(59, 130, 246, 0.08) 50%, transparent 51%),
+        /* Grid de pontos tech */
+        radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(37, 99, 235, 0.12) 1px, transparent 1px),
+        /* Linhas de circuito */
+        linear-gradient(45deg, transparent 48%, rgba(59, 130, 246, 0.06) 49%, rgba(59, 130, 246, 0.12) 50%, rgba(59, 130, 246, 0.06) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(37, 99, 235, 0.05) 49%, rgba(37, 99, 235, 0.1) 50%, rgba(37, 99, 235, 0.05) 51%, transparent 52%);
+      background-size: 
+        60px 60px,
+        60px 60px,
+        20px 20px,
+        30px 30px,
+        120px 120px,
+        80px 80px;
+      background-position:
+        0 0,
+        0 0,
+        5px 5px,
+        15px 15px,
+        0 0,
+        40px 40px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 1;
+      animation: techTexture 20s ease-in-out infinite;
+    }
+    
+    .contact-form-modern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        rgba(59, 130, 246, 0.8) 0%, 
+        rgba(37, 99, 235, 1) 25%, 
+        rgba(59, 130, 246, 0.8) 50%,
+        rgba(37, 99, 235, 1) 75%, 
+        rgba(59, 130, 246, 0.8) 100%);
+      background-size: 300% 100%;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    
+    .contact-form-modern::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 1px;
+      background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(37, 99, 235, 0.1) 50%, 
+        transparent 70%);
+      background-size: 200% 200%;
+      animation: borderShimmer 3s ease-in-out infinite;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      pointer-events: none;
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { background-position: 300% 0; }
+      50% { background-position: -300% 0; }
+    }
+    
+    @keyframes borderShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes techTexture {
+      0%, 100% { 
+        background-position:
+          0 0,
+          0 0,
+          5px 5px,
+          15px 15px,
+          0 0,
+          40px 40px;
+        opacity: 0.6; 
+      }
+      25% { 
+        background-position:
+          10px 5px,
+          -5px 10px,
+          15px 10px,
+          20px 20px,
+          20px 10px,
+          60px 50px;
+        opacity: 0.4; 
+      }
+      50% { 
+        background-position:
+          20px 10px,
+          -10px 20px,
+          25px 15px,
+          25px 25px,
+          40px 20px,
+          80px 60px;
+        opacity: 0.7; 
+      }
+      75% { 
+        background-position:
+          15px 15px,
+          -15px 15px,
+          20px 20px,
+          30px 30px,
+          30px 30px,
+          70px 70px;
+        opacity: 0.5; 
+      }
+    }
+    
+    /* Form Header */
+    .form-header {
+      text-align: center;
+      margin-bottom: var(--space-10);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .form-title {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: var(--space-3);
+      letter-spacing: -0.02em;
+    }
+    
+    .form-subtitle {
+      font-size: var(--text-base);
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      margin-bottom: var(--space-8);
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Remove labels - usando apenas placeholders */
+    .form-label {
+      display: none;
     }
     
     .form-input,
     .form-textarea,
     select {
       width: 100%;
-      padding: var(--space-3) var(--space-4);
-      background: var(--surface-secondary);
-      border: 1px solid var(--gray-300);
-      border-radius: var(--radius-sm);
+      padding: var(--space-5) var(--space-6);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px;
       font-size: var(--text-base);
       font-family: inherit;
-      color: var(--gray-800);
-      transition: all var(--duration) var(--ease);
+      color: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+    
+    .form-input:hover,
+    .form-textarea:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 
+        0 8px 25px rgba(59, 130, 246, 0.2),
+        0 4px 10px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
     }
     
     .form-input:focus,
     .form-textarea:focus,
     select:focus {
       outline: none;
-      background: var(--white);
+      background: rgba(15, 23, 42, 1);
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      color: rgba(255, 255, 255, 1);
+      box-shadow: 
+        0 0 0 4px rgba(59, 130, 246, 0.2),
+        0 16px 40px rgba(59, 130, 246, 0.3),
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px) scale(1.01);
+    }
+    
+    .form-input:focus::placeholder,
+    .form-textarea:focus::placeholder {
+      color: rgba(255, 255, 255, 0.3);
     }
     
     .form-textarea {
@@ -1104,9 +1336,65 @@
     
     .form-submit {
       width: 100%;
-      padding: var(--space-4) var(--space-6);
-      font-weight: 600;
+      padding: var(--space-6) var(--space-8);
+      font-weight: 700;
       cursor: pointer;
+      border-radius: 16px;
+      background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 1) 0%, 
+        rgba(37, 99, 235, 1) 50%, 
+        rgba(29, 78, 216, 1) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: white;
+      font-size: var(--text-lg);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      letter-spacing: -0.01em;
+      margin-top: var(--space-6);
+      box-shadow: 
+        0 8px 32px rgba(59, 130, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .form-submit::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.3) 30%,
+        rgba(255,255,255,0.5) 50%,
+        rgba(255,255,255,0.3) 70%,
+        transparent 100%);
+      transition: left 0.8s ease-out;
+    }
+    
+    .form-submit:hover::before {
+      left: 100%;
+    }
+    
+    .form-submit:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 
+        0 20px 40px rgba(59, 130, 246, 0.5),
+        0 10px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 1) 0%, 
+        rgba(59, 130, 246, 1) 50%, 
+        rgba(29, 78, 216, 1) 100%);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    
+    .form-submit:active {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 
+        0 8px 16px rgba(37, 99, 235, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.08);
     }
     
     .contact-form.loading {
@@ -1120,13 +1408,28 @@
       cursor: not-allowed;
     }
     
-    /* Field Error Styles */
+    /* Field Error Styles - Dark Theme */
     .field-error {
       display: none;
-      color: var(--error);
+      color: rgba(248, 113, 113, 0.9);
       font-size: var(--text-xs);
-      margin-top: var(--space-1);
-      padding: var(--space-1) 0;
+      margin-top: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: rgba(220, 38, 38, 0.15);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid rgba(239, 68, 68, 0.8);
+      animation: errorSlideIn 0.3s ease-out;
+    }
+    
+    @keyframes errorSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
     
     .field-error.show {
@@ -1135,59 +1438,212 @@
     
     .form-input.error,
     .form-textarea.error {
-      border-color: var(--error);
-      background-color: var(--error-light);
+      border-color: rgba(239, 68, 68, 0.8);
+      background-color: rgba(220, 38, 38, 0.1);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+      animation: errorShake 0.5s ease-in-out;
+    }
+    
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
     }
     
     .form-input.success,
     .form-textarea.success {
-      border-color: var(--success);
-      background-color: var(--success-light);
+      border-color: rgba(34, 197, 94, 0.8);
+      background-color: rgba(5, 150, 105, 0.1);
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
     }
     
-    /* Character Counter */
+    .form-input.success::after,
+    .form-textarea.success::after {
+      content: '✓';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--success);
+      font-weight: bold;
+      pointer-events: none;
+    }
+    
+    /* Character Counter - Dark Theme */
     .char-counter {
       text-align: right;
       font-size: var(--text-xs);
-      color: var(--gray-500);
+      color: rgba(255, 255, 255, 0.5);
       margin-top: var(--space-1);
+      padding: var(--space-1) 0;
+      transition: all var(--duration) var(--ease);
     }
     
     .char-counter.warning {
-      color: var(--warning);
+      color: rgba(251, 191, 36, 0.8);
+      font-weight: 600;
     }
     
     .char-counter.error {
-      color: var(--error);
+      color: rgba(239, 68, 68, 0.8);
+      font-weight: 600;
+      animation: pulse 1s infinite;
     }
     
-    /* Form Status Messages */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    /* Consent Checkbox Styles */
+    .consent-group {
+      margin-bottom: var(--space-8);
+    }
+    
+    .consent-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      user-select: none;
+    }
+    
+    .consent-checkbox input[type="checkbox"] {
+      display: none;
+    }
+    
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.8);
+      position: relative;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .consent-checkbox:hover .checkmark {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+    }
+    
+    .consent-checkbox input[type="checkbox"]:checked + .checkmark {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(37, 99, 235, 1));
+      border-color: rgba(59, 130, 246, 1);
+    }
+    
+    .consent-checkbox input[type="checkbox"]:checked + .checkmark::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    
+    .consent-text {
+      flex: 1;
+    }
+    
+    .privacy-link {
+      color: rgba(59, 130, 246, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    
+    .privacy-link:hover {
+      color: rgba(59, 130, 246, 1);
+      text-decoration: underline;
+    }
+    
+    /* Form Status Messages - Modern Design */
     .form-status {
-      padding: var(--space-4);
-      border-radius: var(--radius-sm);
+      padding: var(--space-5) var(--space-6);
+      border-radius: var(--radius-lg);
       margin-bottom: var(--space-6);
       font-weight: 500;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      box-shadow: var(--shadow-md);
+      animation: statusSlideIn 0.5s ease-out;
+    }
+    
+    @keyframes statusSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .form-status::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
     
     .form-status.success {
-      background-color: var(--success-light);
+      background: linear-gradient(135deg, var(--success-light) 0%, #ECFDF5 100%);
       color: var(--success);
-      border: 1px solid rgba(5, 150, 105, 0.3);
+      border: 1px solid rgba(5, 150, 105, 0.2);
+      border-left: 4px solid var(--success);
+    }
+    
+    .form-status.success::before {
+      background: var(--success);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3e%3c/svg%3e");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
     }
     
     .form-status.error {
-      background-color: var(--error-light);
+      background: linear-gradient(135deg, var(--error-light) 0%, #FEF2F2 100%);
       color: var(--error);
-      border: 1px solid rgba(220, 38, 38, 0.3);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      border-left: 4px solid var(--error);
+    }
+    
+    .form-status.error::before {
+      background: var(--error);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd'/%3e%3c/svg%3e");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
     }
     
     .form-status.warning {
-      background-color: var(--warning-light);
+      background: linear-gradient(135deg, var(--warning-light) 0%, #FFFBEB 100%);
       color: var(--warning);
-      border: 1px solid rgba(217, 119, 6, 0.3);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      border-left: 4px solid var(--warning);
     }
     
-    /* Loading Button States */
+    .form-status.warning::before {
+      background: var(--warning);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    
+    /* Loading Button States - Modern Design */
     .btn-loading {
       display: flex;
       align-items: center;
@@ -1203,16 +1659,27 @@
     }
     
     .form-submit:disabled {
-      opacity: 0.6;
+      opacity: 0.7;
       cursor: not-allowed;
       transform: none !important;
+      background: var(--gray-400) !important;
+      box-shadow: none !important;
+    }
+    
+    .form-submit.loading {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--blue-600) 100%) !important;
+      cursor: wait;
+    }
+    
+    .form-submit.loading::before {
+      display: none;
     }
     
     /* FOOTER */
     .footer {
       background: var(--navy-900);
       color: white;
-      padding: var(--space-16) 0 var(--space-8);
+      padding: var(--space-12) 0;
     }
     
     .footer .container {
@@ -1225,32 +1692,7 @@
       text-align: center;
     }
     
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: var(--space-8);
-      margin-bottom: var(--space-8);
-    }
-    
-    .footer-links a {
-      color: rgba(255,255,255,0.8);
-      font-weight: 500;
-      font-size: var(--text-sm);
-      text-decoration: none;
-      transition: color var(--duration) var(--ease);
-    }
-    
-    .footer-links a:hover {
-      color: white;
-    }
-    
-    .footer-divider {
-      width: 80px;
-      height: 1px;
-      background: rgba(255,255,255,0.2);
-      margin: 0 auto var(--space-6);
-    }
+
     
     .footer-copyright {
       font-size: var(--text-sm);
@@ -1260,7 +1702,7 @@
 
     /* AI INTEGRATION SECTION STYLES */
     .integration-section {
-      padding: var(--space-16) 0 var(--space-24) 0;
+      padding: var(--space-12) 0 var(--space-16) 0;
       background: var(--gray-50);
       position: relative;
     }
@@ -1386,6 +1828,14 @@
       padding: 0 var(--space-6);
     }
 
+    .integration-process {
+      margin-bottom: var(--space-12);
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 var(--space-6);
+    }
+
     .models-title {
       text-align: center;
       font-size: var(--text-2xl);
@@ -1423,22 +1873,24 @@
       box-shadow: var(--shadow-md);
     }
 
-    .model-icon {
+        .model-icon {
       width: 48px;
       height: 48px;
       margin: 0 auto var(--space-3) auto;
-      background: var(--primary-light);
+      background: var(--navy-800);
       border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: var(--text-xl);
-      color: var(--primary);
-    }
-
-    .model-card:hover .model-icon {
-      background: var(--primary);
       color: white;
+      transition: all var(--duration) var(--ease);
+    }
+    
+    .model-card:hover .model-icon {
+      background: var(--navy-900);
+      color: white;
+      transform: translateY(-2px);
     }
 
     .model-name {
@@ -1455,8 +1907,8 @@
 
     .integration-section .services-section {
       background: transparent;
-      padding: var(--space-16) 0;
-      margin-top: var(--space-8);
+      padding: var(--space-12) 0;
+      margin-top: var(--space-6);
       width: 100%;
     }
 
@@ -1496,7 +1948,7 @@
 
     .service-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: var(--space-3);
       margin-bottom: var(--space-3);
     }
@@ -1530,11 +1982,13 @@
       line-height: 1.3;
       display: flex;
       align-items: center;
+      margin-top: 8px;
     }
     
     @media (max-width: 767px) {
       .service-name {
-        transform: translateY(-2px);
+        transform: translateY(6px);
+        margin-top: 4px;
       }
     }
 
@@ -1546,7 +2000,7 @@
 
     @media (max-width: 768px) {
       .integration-section {
-        padding: var(--space-16) 0;
+        padding: var(--space-10) 0;
       }
       
       .integration-section .section-header {
@@ -1569,8 +2023,8 @@
       }
       
       .integration-section .services-section {
-        padding: var(--space-12) 0;
-        margin-top: var(--space-6);
+        padding: var(--space-8) 0;
+        margin-top: var(--space-4);
       }
       
       .integration-section .services-grid {
@@ -1582,7 +2036,7 @@
     /* Extra small mobile devices */
     @media (max-width: 480px) {
       .integration-section {
-        padding: var(--space-12) 0;
+        padding: var(--space-4) 0 var(--space-6) 0;
       }
       
       .integration-section .section-header {
@@ -1604,8 +2058,8 @@
       }
       
       .integration-section .services-section {
-        padding: var(--space-8) 0;
-        margin-top: var(--space-4);
+        padding: var(--space-6) 0;
+        margin-top: var(--space-2);
       }
       
       .process-step {
@@ -1972,9 +2426,78 @@
     
     <!-- AI Integration Section -->
     <section class="integration-section">
-        <div class="section-header">
-            <span class="section-badge">Integração de IA</span>
-            <p class="section-subtitle">Integramos IA avançada à sua empresa para transformar dados em decisões rápidas e lucrativas.</p>
+
+        <div class="ai-models">
+            <h3 class="models-title">Modelos de IA Suportados</h3>
+            <p class="models-subtitle">Conectamos com os principais provedores de IA</p>
+            
+            <div class="models-grid">
+                <div class="model-card">
+                    <div class="model-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
+                        </svg>
+                    </div>
+                    <div class="model-name">GPT-4</div>
+                    <div class="model-provider">OpenAI</div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7.307 2.5h9.386L12 21.5z"/>
+                            <path d="M12 0L24 12 12 24 0 12z" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <div class="model-name">Claude</div>
+                    <div class="model-provider">Anthropic</div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 22L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <div class="model-name">Gemini</div>
+                    <div class="model-provider">Google</div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </div>
+                    <div class="model-name">LLaMA</div>
+                    <div class="model-provider">Meta</div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 16.004h6.377v-2.813H2.813V4.376h8.75v2.812h2.814V2.813A2.815 2.815 0 0 0 11.564 0H2.814A2.815 2.815 0 0 0 0 2.813v13.191zm8.75 5.621v-8.75a2.815 2.815 0 0 1 2.813-2.813h8.75A2.815 2.815 0 0 1 23.125 12.875v8.75A2.815 2.815 0 0 1 20.313 24.438h-8.75a2.815 2.815 0 0 1-2.813-2.813z"/>
+                        </svg>
+                    </div>
+                    <div class="model-name">Azure AI</div>
+                    <div class="model-provider">Microsoft</div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.763 10.036c.195-.195.451-.293.707-.293s.512.098.707.293l2.829 2.829c.391.391.391 1.023 0 1.414s-1.023.391-1.414 0l-2.829-2.829c-.391-.391-.391-1.023 0-1.414zm8.132 0c.195-.195.451-.293.707-.293s.512.098.707.293l2.829 2.829c.391.391.391 1.023 0 1.414s-1.023.391-1.414 0l-2.829-2.829c-.391-.391-.391-1.023 0-1.414zM7.05 17.95c0-.256.098-.512.293-.707l2.829-2.829c.391-.391 1.023-.391 1.414 0s.391 1.023 0 1.414l-2.829 2.829c-.195.195-.451.293-.707.293s-.512-.098-.707-.293c-.391-.391-.391-1.023 0-1.414zm9.9 0c0-.256.098-.512.293-.707l2.829-2.829c.391-.391 1.023-.391 1.414 0s.391 1.023 0 1.414l-2.829 2.829c-.195.195-.451.293-.707.293s-.512-.098-.707-.293c-.391-.391-.391-1.023 0-1.414z"/>
+                        </svg>
+                    </div>
+                    <div class="model-name">Bedrock</div>
+                    <div class="model-provider">AWS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="integration-process">
+            <h3 class="models-title">Processo de Integração</h3>
+            <p class="models-subtitle">6 etapas para implementação eficaz</p>
         </div>
 
         <div class="process-flow">
@@ -2033,48 +2556,33 @@
                     <li>Suporte contínuo</li>
                 </ul>
             </div>
-        </div>
 
-        <div class="ai-models">
-            <h3 class="models-title">Modelos de IA Suportados</h3>
-            <p class="models-subtitle">Conectamos com os principais provedores de IA do mercado</p>
-            
-            <div class="models-grid">
-                <div class="model-card">
-                    <div class="model-icon">🤖</div>
-                    <div class="model-name">GPT-4</div>
-                    <div class="model-provider">OpenAI</div>
+            <div class="process-step">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Treinamento & Capacitação</h3>
                 </div>
-                
-                <div class="model-card">
-                    <div class="model-icon">🧠</div>
-                    <div class="model-name">Claude</div>
-                    <div class="model-provider">Anthropic</div>
+                <p class="step-description">Capacitamos sua equipe para extrair o máximo valor da solução implementada.</p>
+                <ul class="step-features">
+                    <li>Workshops práticos</li>
+                    <li>Documentação completa</li>
+                    <li>Sessões de Q&A</li>
+                    <li>Material de referência</li>
+                </ul>
+            </div>
+
+            <div class="process-step">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <h3 class="step-title">Evolução & Otimização</h3>
                 </div>
-                
-                <div class="model-card">
-                    <div class="model-icon">💎</div>
-                    <div class="model-name">Gemini</div>
-                    <div class="model-provider">Google</div>
-                </div>
-                
-                <div class="model-card">
-                    <div class="model-icon">🦙</div>
-                    <div class="model-name">LLaMA</div>
-                    <div class="model-provider">Meta</div>
-                </div>
-                
-                <div class="model-card">
-                    <div class="model-icon">☁️</div>
-                    <div class="model-name">Azure AI</div>
-                    <div class="model-provider">Microsoft</div>
-                </div>
-                
-                <div class="model-card">
-                    <div class="model-icon">🚀</div>
-                    <div class="model-name">Bedrock</div>
-                    <div class="model-provider">AWS</div>
-                </div>
+                <p class="step-description">Evoluímos continuamente a solução com base nos resultados e feedback coletados.</p>
+                <ul class="step-features">
+                    <li>Análise de resultados</li>
+                    <li>Ajustes de performance</li>
+                    <li>Novas funcionalidades</li>
+                    <li>Expansão de capacidades</li>
+                </ul>
             </div>
         </div>
 
@@ -2166,6 +2674,34 @@
                     </div>
                     <p class="service-description">Automatização de processos repetitivos usando IA para aumentar eficiência e reduzir custos.</p>
                 </div>
+
+                <div class="service-item">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 0-8-2.5-8-9s3-9 8-9 8 2.5 8 9c0 1.5-.5 3-1 4l6 6-3 3-6-6c-1 .5-2.5 1-4 1z"></path>
+                                <path d="M8.5 8.5c-.83-.83-2.17-.83-3 0s-.83 2.17 0 3 2.17.83 3 0 .83-2.17 0-3z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="service-name">Machine Learning Personalizado</h4>
+                    </div>
+                    <p class="service-description">Modelos de ML customizados para suas necessidades específicas: predições, classificações e recomendações.</p>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4.5 16.5c-1.5 1.5-1.5 4 0 5.5s4 1.5 5.5 0L12 20l2 2c1.5 1.5 4 1.5 5.5 0s1.5-4 0-5.5L17 14l-5 5-5-5z"></path>
+                                <path d="M14 14V9a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v5"></path>
+                                <path d="M18 10h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2"></path>
+                                <path d="M4 10H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                            </svg>
+                        </div>
+                        <h4 class="service-name">APIs Inteligentes</h4>
+                    </div>
+                    <p class="service-description">Desenvolvimento de APIs robustas com IA integrada para conectar sistemas e automatizar fluxos de trabalho.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -2174,12 +2710,8 @@
     <section class="cta-section">
       <div class="cta-content">
         <h2>Precisa transformar dados em resultados?</h2>
-        <p>
-          Análise técnica gratuita do seu cenário atual.<br>
-          Proposta detalhada com cronograma em 48 horas.
-        </p>
         <a href="#contato" class="btn btn-primary">
-          Solicitar Análise Gratuita
+          Conversar com um especialista
         </a>
       </div>
     </section>
@@ -2190,55 +2722,24 @@
         <div class="section-header">
           <span class="section-badge">Contato</span>
           <h2>Vamos Conversar</h2>
-          <p>Resposta em até 24 horas. Análise inicial gratuita.</p>
+          <p>Análise inicial gratuita.</p>
         </div>
         
-        <div class="contact-grid">
-          <div class="contact-info">
-            <h3>Como me encontrar</h3>
-            <p>Entre em contato pelo canal de sua preferência. Respondo rapidamente e gosto de conversas objetivas.</p>
-            
-            <ul class="contact-methods">
-              <li class="contact-method">
-                <div class="contact-method-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
+        <div class="contact-container">
+          <div class="contact-info-simple">
+            <div class="contact-essential">
+              <span class="contact-email">contato@lucaspinheiro.work</span>
+              <span class="contact-response">Resposta em até 24h</span>
                 </div>
-                <div>
-                  <strong>Email</strong>
-                  <span>lucas.negociosagro@gmail.com</span>
                 </div>
-              </li>
-              <li class="contact-method">
-                <div class="contact-method-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                </div>
-                <div>
-                  <strong>LinkedIn Profissional</strong>
-                  <span>linkedin.com/in/lucaspinheirocosta</span>
-                </div>
-              </li>
-              <li class="contact-method">
-                <div class="contact-method-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Telefone Comercial</strong>
-                  <span>Disponível após primeiro contato</span>
-                </div>
-              </li>
-            </ul>
+          
+          <form class="contact-form-modern" id="contactForm">
+            <!-- Título do formulário -->
+            <div class="form-header">
+              <h3 class="form-title">Iniciar Conversa</h3>
+              <p class="form-subtitle">Preencha os dados abaixo e vamos conversar sobre seu projeto</p>
           </div>
           
-          <form class="contact-form" id="contactForm">
             <!-- Campo honeypot invisível para detectar bots -->
             <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;">
               <label for="honeypot">Deixe este campo vazio</label>
@@ -2248,42 +2749,54 @@
             <!-- Campo timestamp para validação de timing -->
             <input type="hidden" id="timestamp" name="timestamp">
             
+            <!-- Campo de consentimento (hidden por padrão, será preenchido via checkbox) -->
+            <input type="hidden" id="consent" name="consent" value="false">
+            
             <div class="form-group">
-              <label for="name" class="form-label">Nome Completo *</label>
               <input type="text" id="name" name="name" class="form-input" required 
                      minlength="2" maxlength="100" 
                      pattern="[a-zA-ZÀ-ÿ\s]+" 
-                     placeholder="Seu nome completo"
+                     placeholder="Nome completo *"
                      title="Digite apenas letras e espaços">
               <div class="field-error" id="name-error"></div>
             </div>
             
             <div class="form-group">
-              <label for="email" class="form-label">Email *</label>
               <input type="email" id="email" name="email" class="form-input" required 
                      maxlength="254"
-                     placeholder="seu@email.com"
+                     placeholder="Email profissional *"
                      title="Digite um email válido">
               <div class="field-error" id="email-error"></div>
             </div>
             
             <div class="form-group">
-              <label for="company" class="form-label">Empresa/Organização</label>
               <input type="text" id="company" name="company" class="form-input" 
                      maxlength="100"
-                     placeholder="Nome da sua empresa (opcional)">
+                     placeholder="Empresa/Organização (opcional)">
               <div class="field-error" id="company-error"></div>
             </div>
             
             <div class="form-group">
-              <label for="message" class="form-label">Mensagem *</label>
               <textarea id="message" name="message" class="form-textarea" required
                         minlength="10" maxlength="2000"
-                        placeholder="Descreva seu projeto ou necessidade..."></textarea>
+                        placeholder="Descreva seu projeto ou necessidade... *"></textarea>
               <div class="field-error" id="message-error"></div>
               <div class="char-counter">
                 <span id="char-count">0</span>/2000 caracteres
               </div>
+            </div>
+            
+            <!-- Checkbox de consentimento -->
+            <div class="form-group consent-group">
+              <label class="consent-checkbox">
+                <input type="checkbox" id="consentCheckbox" name="consentCheckbox" required>
+                <span class="checkmark"></span>
+                <span class="consent-text">
+                  Autorizo o contato via email para discussão do projeto e envio de informações relacionadas aos serviços de consultoria em IA e dados. 
+                  <a href="#" class="privacy-link">Ver política de privacidade</a>
+                </span>
+              </label>
+              <div class="field-error" id="consent-error"></div>
             </div>
             
             <div class="form-status" id="form-status" style="display: none;"></div>
@@ -2298,7 +2811,7 @@
                                       values="0 12 12;360 12 12" dur="1s" repeatCount="indefinite"/>
                   </path>
                 </svg>
-                Enviando...
+                <span style="margin-left: 8px;">Enviando mensagem...</span>
               </span>
             </button>
           </form>
@@ -2311,15 +2824,8 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <div class="footer-links">
-          <a href="#servicos">Competências</a>
-          <a href="#contato">Contato</a>
-          <a href="#">Portfólio</a>
-          <a href="#">Publicações</a>
-        </div>
-        <div class="footer-divider"></div>
         <div class="footer-copyright">
-          © 2025 lucaspinheiro.work. Cientista de Dados. Todos os direitos reservados.
+          © 2025 lucaspinheiro.work. Todos os direitos reservados.
         </div>
       </div>
     </div>
@@ -2475,6 +2981,17 @@ Atenciosamente,`;
           }
         });
         
+        // Validate consent checkbox
+        const consentCheckbox = document.getElementById('consentCheckbox');
+        if (!consentCheckbox.checked) {
+          showFieldError('consent', 'É necessário autorizar o contato para prosseguir.');
+          isValid = false;
+        } else {
+          clearFieldError(document.getElementById('consent'));
+          // Update hidden consent field
+          document.getElementById('consent').value = 'true';
+        }
+        
         if (!isValid) {
           showFormStatus('Por favor, corrija os erros antes de enviar.', 'error');
           return;
@@ -2483,6 +3000,15 @@ Atenciosamente,`;
         // Get form data
         const formData = new FormData(this);
         const data = Object.fromEntries(formData);
+        
+        // Add anti-spam and consent tracking data
+        data.submissionTime = new Date().toISOString();
+        data.userAgent = navigator.userAgent;
+        data.referrer = document.referrer || 'direct';
+        data.ipTimestamp = Date.now().toString();
+        data.consentGranted = data.consent === 'true';
+        data.consentTimestamp = new Date().toISOString();
+        data.formVersion = '2.0-dark-consent';
         
         // Show loading state
         setLoadingState(true);
@@ -2520,11 +3046,20 @@ Atenciosamente,`;
               document.querySelector('.char-counter').classList.remove('warning', 'error');
             }
             
+            // Reset consent checkbox and hidden field
+            const consentCheckbox = document.getElementById('consentCheckbox');
+            const consentHidden = document.getElementById('consent');
+            if (consentCheckbox) consentCheckbox.checked = false;
+            if (consentHidden) consentHidden.value = 'false';
+            
             // Clear all field states
             inputs.forEach(input => {
               input.classList.remove('error', 'success');
               clearFieldError(input);
             });
+            
+            // Clear consent error
+            clearFieldError(document.getElementById('consent'));
             
           } else {
             // Error response
