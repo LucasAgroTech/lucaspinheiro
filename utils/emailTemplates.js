@@ -167,7 +167,7 @@ const createOwnerEmailTemplate = (data) => {
         
         <div class="footer">
           <p>Este email foi enviado automaticamente pelo sistema de contato do site</p>
-          <p style="margin-top: 8px;">© ${new Date().getFullYear()} Lucas Pinheiro - Todos os direitos reservados</p>
+          <p style="margin-top: 8px;">© ${new Date().getFullYear()} lucaspinheiro.work - Todos os direitos reservados</p>
         </div>
       </div>
     </body>
@@ -329,7 +329,7 @@ const createClientConfirmationTemplate = (data) => {
           </div>
           
           <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">
-            © ${new Date().getFullYear()} Lucas Pinheiro - Especialista em Soluções Digitais<br>
+            © ${new Date().getFullYear()} lucaspinheiro.work - Especialista em Soluções Digitais<br>
             CNPJ: Não informado | Endereço: São Paulo, SP
           </p>
         </div>
@@ -391,14 +391,14 @@ CONTATO:
 Para projetos urgentes, você pode me contatar diretamente via WhatsApp para uma resposta mais rápida.
 
 Atenciosamente,
-Lucas Pinheiro
+lucaspinheiro.work
 Especialista em Soluções Digitais
 
 ---
 Este email foi enviado porque você entrou em contato através do meu site.
 Para não receber mais emails, responda com "UNSUBSCRIBE" no assunto.
 
-© ${new Date().getFullYear()} Lucas Pinheiro - Todos os direitos reservados
+© ${new Date().getFullYear()} lucaspinheiro.work - Todos os direitos reservados
   `.trim();
 };
 

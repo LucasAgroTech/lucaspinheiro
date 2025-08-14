@@ -42,14 +42,14 @@ const smtpConfig = {
 // Configurações de email padrão
 const emailDefaults = {
   from: {
-    name: process.env.SENDER_NAME || 'Lucas Pinheiro',
+    name: process.env.SENDER_NAME || 'lucaspinheiro.work',
     address: process.env.SENDER_EMAIL || 'no-reply@lucaspinheiro.work'
   },
   replyTo: process.env.REPLY_TO_EMAIL || process.env.SENDER_EMAIL,
   headers: {
     'X-Priority': '3',
     'X-Mailer': 'NodeMailer v6.9.0',
-    'X-Application': 'Lucas Pinheiro Portfolio',
+    'X-Application': 'lucaspinheiro.work Portfolio',
     'X-Message-Source': 'Contact Form',
     'X-Auto-Response-Suppress': 'OOF, DR, RN, NRN',
     'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
@@ -60,7 +60,7 @@ const emailDefaults = {
     'X-Originating-IP': '[127.0.0.1]',
     'X-Authentication-Results': 'spf=pass smtp.mailfrom=' + (process.env.SENDER_EMAIL || 'no-reply@lucaspinheiro.work'),
     // Content-Type será definido pelo nodemailer
-    'X-Content-Filtered-By': 'Lucas Pinheiro Mail System',
+    'X-Content-Filtered-By': 'lucaspinheiro.work Mail System',
     'X-Spam-Status': 'No, hits=0.0 required=5.0',
     'MIME-Version': '1.0'
   }

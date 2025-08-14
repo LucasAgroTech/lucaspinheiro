@@ -1,4 +1,4 @@
-# Lucas Pinheiro - Portfolio Profissional
+# lucaspinheiro.work - Portfolio Profissional
 
 Sistema de portfolio profissional com formulário de contato integrado, utilizando AWS SES para envio de emails e PostgreSQL para armazenamento de dados.
 
@@ -292,9 +292,9 @@ MIT
 
 ## 👤 Autor
 
-**Lucas Pinheiro**
+**lucaspinheiro.work**
 - GitHub: [@LucasAgroTech](https://github.com/LucasAgroTech)
-- LinkedIn: [Lucas Pinheiro](https://linkedin.com/in/lucaspinheiro)
+- LinkedIn: [lucaspinheiro.work](https://linkedin.com/in/lucaspinheiro)
 
 ## 🤝 Contribuições
 

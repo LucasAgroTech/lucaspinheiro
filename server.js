@@ -369,7 +369,7 @@ app.post('/api/send-email',
     try {
       await emailService.sendEmail({
         to: email,
-        subject: 'Recebi sua mensagem - Lucas Pinheiro',
+        subject: 'Recebi sua mensagem - lucaspinheiro.work',
         html: createClientConfirmationTemplate(emailData),
         text: createClientTextTemplate(emailData),
         referenceId: `confirmation-${contactId}`,

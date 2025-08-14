@@ -176,7 +176,7 @@ class EmailService {
           'Message-ID': `<${Date.now()}.${Math.random().toString(36).substring(7)}@lucaspinheiro.work>`,
           'Date': new Date().toUTCString(),
           'List-Unsubscribe': options.unsubscribeUrl ? `<${options.unsubscribeUrl}>` : '<mailto:unsubscribe@lucaspinheiro.work>',
-          'List-Id': 'Lucas Pinheiro Contact Form <contact.lucaspinheiro.work>'
+          'List-Id': 'lucaspinheiro.work Contact Form <contact.lucaspinheiro.work>'
         }
       };
 
@@ -255,7 +255,7 @@ class EmailService {
       
       const result = await this.sendEmail({
         to: testEmail,
-        subject: '🔧 Teste de Configuração SMTP - Lucas Pinheiro',
+        subject: '🔧 Teste de Configuração SMTP - lucaspinheiro.work',
         html: createTestEmailTemplate({
           host: process.env.SMTP_HOST,
           port: process.env.SMTP_PORT,
